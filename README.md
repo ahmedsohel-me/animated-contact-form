@@ -1,1 +1,1 @@
-# animated-contact-form design by ahmed sohel
+# animated-contact-form

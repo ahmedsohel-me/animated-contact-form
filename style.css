@@ -17,6 +17,11 @@ body {
     align-items: center;
     flex-direction: column;
 }
+.container h3 {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+}
 .input-group {
     display: flex;
     position: relative;
@@ -54,8 +59,10 @@ body {
     color: #111;
 }
 
-#output,
-#copy {
+#hexOutput,
+#rgbOutput,
+#hexCopy,
+#rgbCopy {
     margin-top: 20px;
     margin-right: 5px;
     display: block;
@@ -67,7 +74,6 @@ body {
     border-radius: 5px;
     outline: none;
     cursor: pointer;
-    text-transform: lowercase;
 }
 
 /* Toast message */

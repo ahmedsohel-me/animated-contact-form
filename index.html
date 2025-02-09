@@ -10,11 +10,23 @@
 <body>
     <div class="container" id="root">
         <h1>Get random background color by clicking the follwing button</h1>
-        <div class="input-group">
-            <button class="fixed-hash">#</button>
-            <input type="text" id="output" value="f2f2f2">
-            <button id="copy">Copy</button>
-
+        <div class="hex-color-group">
+            <h3>HEX</h3>
+            <div class="input-group">
+                <button class="fixed-hash">#</button>
+                <input type="text" id="hexOutput" value="F2F2F2">
+                <button id="hexCopy">Copy</button>
+            
+            </div>
+        </div>
+        <div class="rgb-color-group">
+            <h3>RGB</h3>
+            <div class="input-group">
+                <button class="fixed-hash">rgb()</button>
+                <input type="text" id="rgbOutput" value="237, 237, 237">
+                <button id="rgbCopy">Copy</button>
+            
+            </div>
         </div>
         <button id="change-btn">Chnage Color</button>
         <!-- Tost message  -->
@@ -22,7 +34,7 @@
             <div class="toast-content">
                 <p class="checkmark">&#10004;</p>
                 <div class="message">
-                    <span id="copied-text">#f2f2f2</span>
+                    <span id="copied-text">#F2F2F2</span>
                     <span>Copied successfully!</span>
                 </div>
                 <p class="cross-btn" id="cross-btn">&#10006;</p>

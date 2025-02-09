@@ -2,22 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Login form</title>
+    <script src="app.js" defer></script>
+    <title>Generate Random Colors</title>
 </head>
 <body>
-    <!-- animated contact form  -->
-    <div class="container">
-        <h1>Login</h1>
-        <form action="#" method="get">
-            <input type="text" name="UserName:" placeholder="Usename" required>
-            <input type="password" name="Password:" placeholder="Password" required maxlength="6">
-            <input type="submit" value="Submit">
-            <a href="#" class="btn">Forgot Password</a>
-            <a href="#" class="btn">Create Account</a>
-        </form>
+    <div class="container" id="root">
+        <h1>Get random background color by clicking the follwing button</h1>
+        <div class="input-group">
+            <button class="fixed-hash">#</button>
+            <input type="text" id="output" value="f2f2f2">
+            <button id="copy">Copy</button>
+
+        </div>
+        <button id="change-btn">Chnage Color</button>
+        <!-- Tost message  -->
+         <div class="toast" id="toast">
+            <div class="toast-content">
+                <p class="checkmark">&#10004;</p>
+                <div class="message">
+                    <span id="copied-text">#f2f2f2</span>
+                    <span>Copied successfully!</span>
+                </div>
+                <p class="cross-btn" id="cross-btn">&#10006;</p>
+            </div>
+            <div class="progress-bar" id="progress-bar"></div>
+         </div>
     </div>
 </body>
 </html>

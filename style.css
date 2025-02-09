@@ -1,75 +1,171 @@
-body{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #30336b;
 }
-.container{
-    width: 300px;
-    padding: 40px;
-    background-color: #130f40;
+
+body {
+    font-family: sans-serif;
+    font-weight: 400;
+    overflow: hidden;
+}
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.input-group {
+    display: flex;
+    position: relative;
+}
+.fixed-hash {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    border-radius: 6px;
-}
-.container h1{
-    color: #fff;
-    font-size: 40px;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-.container input[type="text"],
-.container input[type="password"]{
-    display: block;
-    width: 200px;
-    padding: 12px 16px;
-    margin: 20px auto;
-    border: none;
-    background: none;
+    top: 21px;
+    left: 0;
+    padding: 9px 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
     outline: none;
-    border: 2px solid #3498db;
-    text-align: center;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 25px;
-}
-.container input[type="text"]:focus,
-.container input[type="password"]:focus{
-    width: 280px;
-    border-color: #2ecc71;
+    background: #ededed;
 }
 
-
-.container input[type="submit"]{
-    display: block;
-    padding: 12px 40px;
-    margin: 20px auto;
-    border: none;
-    background: none;
+#change-btn {
+    border: 1px solid #aaa;
+    background-color: #111;
+    color: #f5f5f5;
     outline: none;
-    border: 2px solid #2ecc71;
-    text-align: center;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 25px;
+    padding: 20px 85px;
+    border-radius: 5px;
+    margin-top: 10px;
     cursor: pointer;
-    transition: .25s;
+    transition: all .5s ease;
 }
-.container input[type="submit"]:hover{
-    background-color: #2ecc71;
+
+#change-btn:hover {
+    background-color: #f5f5f5;
+    color: #111;
 }
-.btn{
-    text-decoration: none;
-    font-size: 12px;
+
+#root {
+    background-color: #f2f2f2;
+    color: #111;
+}
+
+#output,
+#copy {
+    margin-top: 20px;
+    margin-right: 5px;
+    display: block;
+    text-align: center;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    color: #111;
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    text-transform: lowercase;
+}
+
+/* Toast message */
+.toast {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    border-radius: 12px;
+    background: #fff;
+    padding: 20px 35px 20px 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    color: #111;
+    border-left: 6px solid #1946c2;
+    overflow: hidden;
+    transform: translateX(calc(100% + 40px));
+    transition: all 0.5s ease-in-out;
+}
+
+.toast.active {
+    transform: translateX(0%);
+}
+
+.toast .toast-content {
+    display: flex;
+    align-items: center;
+}
+
+.toast-content .message {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.checkmark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 20px;
     color: #fff;
-    padding: 5px;
+    background-color: #1946c2;
 }
-.btn:hover{
-    text-decoration: underline;
-    color: #2ecc71;
+
+#copied-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+}
+
+.message span {
+    font-size: 14px;
+}
+
+.toast .cross-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.toast .cross-btn:hover {
+    opacity: 1;
+}
+
+/* Progress Bar */
+.toast .progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background-color: #ededed;
+    overflow: hidden;
+}
+
+/* The moving progress effect */
+.toast .progress-bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f9f9f9;    
+}
+
+/* Animate when active */
+.progress-bar.active::before {
+    animation: progress 3s linear forwards;
+    background-color: #1946c2;
+}
+
+/* Fixed animation */
+@keyframes progress {
+    100% {
+        width: 0%;
+    }
 }

@@ -1,8 +1,12 @@
 /* General Styles */
-body {
-    font-family: Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
     background-color: #e9ecf1;
 }
 
@@ -27,7 +31,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -35,6 +39,7 @@ body {
     font-size: 18px;
     font-weight: bold;
     color: #333;
+    margin-bottom: 10px;
 }
 
 .change-color {
@@ -44,6 +49,7 @@ body {
     border: none;
     background: none;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .change-color:hover {
@@ -54,7 +60,7 @@ body {
 #display-color {
     width: 100%;
     height: 150px;
-    background: #ddddee;
+    background: #22c55e;
     border-radius: 5px;
 }
 
@@ -62,8 +68,9 @@ body {
 .copy-color-section {
     margin-top: 20px;
     padding-top: 10px;
-    
+
 }
+
 .copy-color-header {
     display: flex;
     justify-content: space-between;
@@ -76,6 +83,7 @@ body {
 .copy-color-header h3 {
     font-size: 16px;
     color: #333;
+    margin-bottom: 10px;
 }
 
 #copy-btn {
@@ -85,35 +93,56 @@ body {
     border: none;
     background: none;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 #copy-btn:hover {
     text-decoration: underline;
 }
+
 .copy-color-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 20px;
+}
+
+.copy-color-footer h5 {
+    font-size: 14px;
+    font-weight: bold;
 }
 
 /* Copy Mode Group (Radio Buttons) */
 .copy-mode-group {
     display: flex;
-    gap: 10px;
     margin-top: 10px;
 }
 
+.copy-mode-group label {
+    font-size: 14px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
 .copy-mode-group input[type="radio"] {
-    margin-right: 5px;
+    cursor: pointer;
+    margin-left: 10px;
 }
 
 /* Color Input Section */
 .color-input-section {
     margin-top: 20px;
 }
+
 .color-input-header {
+    width: 100%;
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.color-input-header h5 {
+    margin-bottom: 5px;
 }
 
 /* Hex & RGB Input Boxes */
@@ -123,16 +152,31 @@ body {
     align-items: center;
     gap: 5px;
     border: 1px solid #ddd;
-    padding: 6px;
     border-radius: 5px;
     background: #f9f9f9;
     width: 100%;
+    height: 40px;
 }
 
-.hex-input-box p {
+.rgb-input-box {
+    padding: 0 5px;
+}
+
+.input-hex,
+.input-rgb {
+    width: 48%;
+}
+
+.hex-input-box span {
     font-weight: bold;
     padding: 0 5px;
-    background: white;
+    background: #ddd;
+    color: #6e6e6e;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .hex-input-box input,
@@ -140,58 +184,102 @@ body {
     border: none;
     outline: none;
     font-size: 14px;
-    width: 100%;
     background: none;
     text-align: left;
+    padding: 6px 0;
 }
 
 /* RGB Color Adjustments */
 .color-input-footer {
-    margin-top: 20px;
+    margin: 20px 0;
+}
+
+.color-input-footer h3 {
+    margin: 20px 0;
+    font-size: 16px;
 }
 
 .rgb-red,
 .rgb-green,
 .rgb-blue {
-    margin-top: 10px;
+    margin: 10px 0;
 }
-.common {
+
+.color-input-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .color-info {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    font-weight: bold;
+    margin: 5px 0;
 }
 
-.range-slider input[type="range"] {
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 6px;
-    background: #ddd;
-    border-radius: 5px;
-    outline: none;
-}
-
-.range-slider input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 14px;
-    height: 14px;
-    background: #3498db;
-    border-radius: 50%;
+.color-input-container input[type="range"] {
     cursor: pointer;
 }
 
-.range-slider input[type="range"]::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
-    background: #3498db;
-    border-radius: 50%;
+/* Toast modal  */
+
+/* Toast Notification Styles */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    max-width: calc(100% - 2rem);
+    width: max-content;
+    animation: slideIn 0.3s ease-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.toast.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.toast-message {
+    line-height: 1.4;
+}
+
+.toast.success {
+    background: #22c55e;
+    color: white;
+}
+
+.toast.success .toast-icon {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.copied-color {
+    font-size: 1rem;
+    font-weight: bolder;
+    margin: 0 0.2rem;
 }

@@ -13,7 +13,7 @@
             <div class="header">
                 <div class="header-info">
                     <h3>Display Color</h3>
-                    <button class="change-color">Random Color</button>
+                    <button class="change-color" id="change-btn">Random Color</button>
                 </div>
                 <div id="display-color"></div>
             </div>
@@ -39,21 +39,21 @@
                     <div class="input-hex">
                         <h5>Hex</h5>
                         <div class="hex-input-box">
-                            <p>#</p> 
-                            <input type="text" id="hex-user-input" placeholder="#a03f3f">
+                            <span class="hash">#</span> 
+                            <input type="text" id="hex-user-input" placeholder="#a03f3f" value="22c55e">
                         </div>
                     </div>
                     <!-- RGB input  -->
                     <div class="input-rgb">
                         <h5>RGB</h5>
                         <div class="rgb-input-box">
-                            <input type="text" id="rgb-user-input" placeholder="rgb(221, 222, 238)">
+                            <input type="text" id="rgb-user-input" placeholder="rgb(221, 222, 238)" disabled value="rgb(34 , 197, 94)">
                         </div>
                     </div>
                 </div>
                 <div class="color-input-footer">
                     <h3>Adjust RGB Colors</h3>
-                    <div class="common">
+                    <div class="color-input-container">
                         <div class="rgb-red">
                             <div class="color-info">
                                 <p>Red</p>
@@ -84,6 +84,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- Toast modal  -->
+        <div class="toast success" id="toast">
+            <span class="toast-icon">&#10004;</span>
+            <span class="toast-message">Color <span id="copied-text">#494746</span> has been copied to clipboard</span>
         </div>
     </section>
 

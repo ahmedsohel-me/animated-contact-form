@@ -5,49 +5,71 @@ window.addEventListener("load", main);
 function main() {
   // Select the dom elements
   const changeBtn = getElementByIdError("change-btn");
-  const root = getElementByIdError("root");
-  const hexOutput = getElementByIdError("hexOutput");
-  const rgbOutput = getElementByIdError("rgbOutput");
-  const hexCopy = getElementByIdError("hexCopy");
-  const rgbCopy = getElementByIdError("rgbCopy");
+  const displayColor = getElementByIdError("display-color");
+  const hexUserInput = getElementByIdError("hex-user-input");
+  const rgbUserInput = getElementByIdError("rgb-user-input");
+  const hexCopy = getElementByIdError("copy-btn");
+  const rgbCopy = getElementByIdError("copy-btn");
   const toast = getElementByIdError("toast");
-  const progressBar = getElementByIdError("progress-bar");
-  const closeBtn = getElementByIdError("cross-btn");
   const copiedText = getElementByIdError("copied-text");
+  const rgbRedValue = getElementByIdError("rgb-red-value");
+  const rgbGreenValue = getElementByIdError("rgb-green-value");
+  const rgbBlueValue = getElementByIdError("rgb-blue-value");
+  const rgbRedRange = getElementByIdError("rgb-red-range");
+  const rgbGreenRange = getElementByIdError("rgb-green-range");
+  const rgbBlueRange = getElementByIdError("rgb-blue-range");
 
   // Change the colors
   changeBtn.addEventListener("click", function () {
     const colors = randomDecimalNumber();
-    root.style.backgroundColor = colors.hex;
+    displayColor.style.backgroundColor = colors.hex;
 
     // Show the hexValue
-    hexOutput.value = colors.hex.substring(1).toUpperCase();
+    hexUserInput.value = colors.hex.substring(1).toUpperCase();
 
     // Show RGB value
-    rgbOutput.value = colors.rgb;
+    rgbUserInput.value = `rgb(${colors.rgb})`;
   });
 
   // Reuseable function for handdle user color input
   function syncColorInput(inputType, value) {
     if (inputType === "hex" && value.length === 6 && isValid(`#${value}`)) {
       const rgbFromHex = hexToRgb(value);
-      rgbOutput.value = rgbFromHex;
-      root.style.backgroundColor = `#${value}`;
+      rgbUserInput.value = `rgb(${rgbFromHex})`;
+      displayColor.style.backgroundColor = `#${value}`;
     } else if (inputType === "rgb" && value.length >= 5) {
       const hexFromRgb = rgbToHex(value);
-      hexOutput.value = hexFromRgb;
-      root.style.backgroundColor = `#${hexFromRgb}`;
+      hexUserInput.value = hexFromRgb;
+      displayColor.style.backgroundColor = `#${hexFromRgb}`;
     }
   }
-  // Handdle the hexOutput user input
-  hexOutput.addEventListener("keyup", function (e) {
+  // Handdle the hexUserInput user input
+  hexUserInput.addEventListener("keyup", function (e) {
     syncColorInput("hex", e.target.value);
   });
 
+  const sliderRGB = {
+    r: rgbRedRange.textContent,
+    g: rgbGreenRange.textContent,
+    b: rgbBlueRange.textContent
+  };
+
   // Handdle the rgb user input
-  rgbOutput.addEventListener("keyup", function (e) {
+  rgbRedRange.addEventListener("input", function (e) {
+    sliderRGB.r = e.target.value;
+  });
+  rgbGreenRange.addEventListener("input", function (e) {
+    sliderRGB.g = e.target.value;
+  });
+  rgbBlueRange.addEventListener("input", function (e) {
+    sliderRGB.b = e.target.value;
+    console.log(sliderRGB);
+  });
+  rgbUserInput.addEventListener("keyup", function (e) {
     syncColorInput("rgb", e.target.value);
   });
+  
+  
 
   // Reuseable function for handdle copy to clipboard
   function copyToClipboard(value, format) {
@@ -56,27 +78,27 @@ function main() {
     window.navigator.clipboard.writeText(
       format === "hex" ? `#${value}` : `rgb(${value})`
     );
-    copiedText.textContent = format === "hex" ? `#${value}` : `rgb(${value})`;
+    copiedText.textContent = format === "hex" ? `#${value}` : `${value}`;
 
     // Show toast notification
     toast.classList.add("active");
-    progressBar.classList.add("active");
 
     setTimeout(() => {
       toast.classList.remove("active");
-      progressBar.classList.remove("active");
     }, 3000);
   }
 
   hexCopy.addEventListener("click", () =>
-    copyToClipboard(hexOutput.value, "hex")
+    copyToClipboard(hexUserInput.value, "hex")
   );
-  rgbCopy.addEventListener("click", () =>
-    copyToClipboard(rgbOutput.value, "rgb")
-  );
+  // rgbCopy.addEventListener("click", () =>
+  //   copyToClipboard(rgbUserInput.value, "rgb")
+  // );
 
   // Close the toast close icon click
-  closeBtn.addEventListener("click", function () {
+  toast.addEventListener("click", function () {
+    console.log(this);
+    
     toast.classList.remove("active");
   });
 }

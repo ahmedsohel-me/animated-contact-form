@@ -1,177 +1,197 @@
-* {
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: #e9ecf1;
 }
 
-body {
-    font-family: sans-serif;
-    font-weight: 400;
-    overflow: hidden;
-}
+/* Container */
 .container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.container h3 {
-    font-size: 16px;
-    text-align: center;
-    margin-top: 20px;
-}
-.input-group {
-    display: flex;
-    position: relative;
-}
-.fixed-hash {
-    position: absolute;
-    top: 21px;
-    left: 0;
-    padding: 9px 5px;
-    border: 1px solid #fff;
+    background: white;
+    width: 95%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
     border-radius: 5px;
-    outline: none;
-    background: #ededed;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-#change-btn {
-    border: 1px solid #aaa;
-    background-color: #111;
-    color: #f5f5f5;
-    outline: none;
-    padding: 20px 85px;
-    border-radius: 5px;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: all .5s ease;
+/* Header */
+.header {
+    text-align: left;
+    margin-bottom: 20px;
 }
 
-#change-btn:hover {
-    background-color: #f5f5f5;
-    color: #111;
-}
-
-#root {
-    background-color: #f2f2f2;
-    color: #111;
-}
-
-#hexOutput,
-#rgbOutput,
-#hexCopy,
-#rgbCopy {
-    margin-top: 20px;
-    margin-right: 5px;
-    display: block;
-    text-align: center;
-    border: 1px solid #aaa;
-    background-color: #fff;
-    color: #111;
-    padding: 10px;
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
-}
-
-/* Toast message */
-.toast {
-    position: absolute;
-    top: 25px;
-    right: 30px;
-    border-radius: 12px;
-    background: #fff;
-    padding: 20px 35px 20px 25px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    color: #111;
-    border-left: 6px solid #1946c2;
-    overflow: hidden;
-    transform: translateX(calc(100% + 40px));
-    transition: all 0.5s ease-in-out;
-}
-
-.toast.active {
-    transform: translateX(0%);
-}
-
-.toast .toast-content {
+.header-info {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
-.toast-content .message {
-    display: flex;
-    flex-direction: column;
-    margin: 0 20px;
+.header-info h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
 }
 
-.checkmark {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    font-size: 20px;
-    color: #fff;
-    background-color: #1946c2;
-}
-
-#copied-text {
-    font-size: 16px;
-    font-weight: 600;
-    color: #111;
-}
-
-.message span {
+.change-color {
     font-size: 14px;
-}
-
-.toast .cross-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    padding: 5px;
+    font-weight: bold;
+    color: #d35400;
+    border: none;
+    background: none;
     cursor: pointer;
-    opacity: 0.7;
 }
 
-.toast .cross-btn:hover {
-    opacity: 1;
+.change-color:hover {
+    text-decoration: underline;
 }
 
-/* Progress Bar */
-.toast .progress-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 4px;
+/* Color Display Box */
+#display-color {
     width: 100%;
-    background-color: #ededed;
-    overflow: hidden;
+    height: 150px;
+    background: #ddddee;
+    border-radius: 5px;
 }
 
-/* The moving progress effect */
-.toast .progress-bar::before {
-    content: '';
-    position: absolute;
-    left: 0;
+/* Copy Color Section */
+.copy-color-section {
+    margin-top: 20px;
+    padding-top: 10px;
+    
+}
+.copy-color-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.copy-color-header h3 {
+    font-size: 16px;
+    color: #333;
+}
+
+#copy-btn {
+    font-size: 14px;
+    font-weight: bold;
+    color: #d35400;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+#copy-btn:hover {
+    text-decoration: underline;
+}
+.copy-color-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Copy Mode Group (Radio Buttons) */
+.copy-mode-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.copy-mode-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Color Input Section */
+.color-input-section {
+    margin-top: 20px;
+}
+.color-input-header {
+    display: flex;
+    align-items: center;
+}
+
+/* Hex & RGB Input Boxes */
+.hex-input-box,
+.rgb-input-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #ddd;
+    padding: 6px;
+    border-radius: 5px;
+    background: #f9f9f9;
     width: 100%;
-    height: 100%;
-    background-color: #f9f9f9;    
 }
 
-/* Animate when active */
-.progress-bar.active::before {
-    animation: progress 3s linear forwards;
-    background-color: #1946c2;
+.hex-input-box p {
+    font-weight: bold;
+    padding: 0 5px;
+    background: white;
 }
 
-/* Fixed animation */
-@keyframes progress {
-    100% {
-        width: 0%;
-    }
+.hex-input-box input,
+.rgb-input-box input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    background: none;
+    text-align: left;
+}
+
+/* RGB Color Adjustments */
+.color-input-footer {
+    margin-top: 20px;
+}
+
+.rgb-red,
+.rgb-green,
+.rgb-blue {
+    margin-top: 10px;
+}
+.common {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.color-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.range-slider input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.range-slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: #3498db;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.range-slider input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: #3498db;
+    border-radius: 50%;
+    cursor: pointer;
 }

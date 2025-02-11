@@ -8,39 +8,85 @@
     <title>Generate Random Colors</title>
 </head>
 <body>
-    <div class="container" id="root">
-        <h1>Get random background color by clicking the follwing button</h1>
-        <div class="hex-color-group">
-            <h3>HEX</h3>
-            <div class="input-group">
-                <button class="fixed-hash">#</button>
-                <input type="text" id="hexOutput" value="F2F2F2">
-                <button id="hexCopy">Copy</button>
-            
-            </div>
-        </div>
-        <div class="rgb-color-group">
-            <h3>RGB</h3>
-            <div class="input-group">
-                <button class="fixed-hash">rgb()</button>
-                <input type="text" id="rgbOutput" value="237, 237, 237">
-                <button id="rgbCopy">Copy</button>
-            
-            </div>
-        </div>
-        <button id="change-btn">Change Color</button>
-        <!-- Tost message  -->
-         <div class="toast" id="toast">
-            <div class="toast-content">
-                <p class="checkmark">&#10004;</p>
-                <div class="message">
-                    <span id="copied-text">#F2F2F2</span>
-                    <span>Copied successfully!</span>
+    <section>
+        <div class="container">
+            <div class="header">
+                <div class="header-info">
+                    <h3>Display Color</h3>
+                    <button class="change-color">Random Color</button>
                 </div>
-                <p class="cross-btn" id="cross-btn">&#10006;</p>
+                <div id="display-color"></div>
             </div>
-            <div class="progress-bar" id="progress-bar"></div>
-         </div>
-    </div>
+            <div class="copy-color-section">
+                <div class="copy-color-header">
+                    <h3>Change & Copy Color</h3>
+                    <button id="copy-btn">Copy To Clipboard</button>
+                </div>
+                <div class="copy-color-footer">
+                    <h5>Select Copy Mode</h5>
+                    <div class="copy-mode-group">
+                        <input type="radio" id="hex-mode" name="color-mode" value="hex-mode">
+                        <label for="hex-mode">Hex</label>
+    
+                        <input type="radio" id="rgb-mode" name="color-mode" value="rgb-mode">
+                        <label for="rgb-mode">RGB</label>
+                    </div>
+                </div>
+            </div>
+            <div class="color-input-section">
+                <div class="color-input-header">
+                    <!-- Hex input  -->
+                    <div class="input-hex">
+                        <h5>Hex</h5>
+                        <div class="hex-input-box">
+                            <p>#</p> 
+                            <input type="text" id="hex-user-input" placeholder="#a03f3f">
+                        </div>
+                    </div>
+                    <!-- RGB input  -->
+                    <div class="input-rgb">
+                        <h5>RGB</h5>
+                        <div class="rgb-input-box">
+                            <input type="text" id="rgb-user-input" placeholder="rgb(221, 222, 238)">
+                        </div>
+                    </div>
+                </div>
+                <div class="color-input-footer">
+                    <h3>Adjust RGB Colors</h3>
+                    <div class="common">
+                        <div class="rgb-red">
+                            <div class="color-info">
+                                <p>Red</p>
+                                <p id="rgb-red-value">221</p>
+                            </div>
+                            <div class="range-slider">
+                                <input type="range" id="rgb-red-range" step="1" min="1" max="255">
+                            </div>
+                        </div>
+                        <div class="rgb-green">
+                            <div class="color-info">
+                                <p>Green</p>
+                                <p id="rgb-green-value">221</p>
+                            </div>
+                            <div class="range-slider">
+                                <input type="range" id="rgb-green-range" step="1" min="1" max="255">
+                            </div>
+                        </div>
+                        <div class="rgb-blue">
+                            <div class="color-info">
+                                <p>Blue</p>
+                                <p id="rgb-blue-value">221</p>
+                            </div>
+                            <div class="range-slider">
+                                <input type="range" id="rgb-blue-range" step="1" min="1" max="255">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </body>
+
 </html>

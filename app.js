@@ -1,109 +1,126 @@
-// Create onload handler
+/**
+ * Date: 12-02-20025
+ * Author: Ahmeds sohel
+ * Description: The Dynamic Color Generator is a lightweight and interactive web application that allows users to generate random colors in both **Hex** and **RGB** formats, copy the color codes to their clipboard with a seamless user experience. The project is built using vanilla JavaScript, ensuring smooth performance without dependencies.
+ */
+
+// Globals
 window.addEventListener("load", main);
 
-// Create main function
+/**
+ * Main Function will Handdle DOM Events
+ */
+
 function main() {
-  // Select the dom elements
-  const changeBtn = getElementByIdError("change-btn");
-  const displayColor = getElementByIdError("display-color");
-  const hexUserInput = getElementByIdError("hex-user-input");
-  const rgbUserInput = getElementByIdError("rgb-user-input");
-  const hexCopy = getElementByIdError("copy-btn");
-  const rgbCopy = getElementByIdError("copy-btn");
+  // DOM References
+  const generateColorBtn = getElementByIdError("generate-color-btn");
+  const userHexInput = getElementByIdError("hex-user-input");
+  const userRgbInput = getElementByIdError("rgb-user-input");
+  const redRangeValue = getElementByIdError("rgb-red-range");
+  const greenRangeValue = getElementByIdError("rgb-green-range");
+  const blueRangeValue = getElementByIdError("rgb-blue-range");
+  const copyModeHex = getElementByIdError("hex-mode");
+  const copyModeRgb = getElementByIdError("rgb-mode");
+  const copyBtn = getElementByIdError("copy-btn");
   const toast = getElementByIdError("toast");
   const copiedText = getElementByIdError("copied-text");
-  const rgbRedValue = getElementByIdError("rgb-red-value");
-  const rgbGreenValue = getElementByIdError("rgb-green-value");
-  const rgbBlueValue = getElementByIdError("rgb-blue-value");
-  const rgbRedRange = getElementByIdError("rgb-red-range");
-  const rgbGreenRange = getElementByIdError("rgb-green-range");
-  const rgbBlueRange = getElementByIdError("rgb-blue-range");
 
-  // Change the colors
-  changeBtn.addEventListener("click", function () {
-    const colors = randomDecimalNumber();
-    displayColor.style.backgroundColor = colors.hex;
+  // Handdle DOM Events
+  generateColorBtn.addEventListener("click", updateColors);
+  userHexInput.addEventListener("keyup", syncColorInput);
 
-    // Show the hexValue
-    hexUserInput.value = colors.hex.substring(1).toUpperCase();
-
-    // Show RGB value
-    rgbUserInput.value = `rgb(${colors.rgb})`;
+  const updateColorOnDom = updateColorOnSliderChange(
+    redRangeValue,
+    greenRangeValue,
+    blueRangeValue
+  );
+  const inputElementArray = [redRangeValue, greenRangeValue, blueRangeValue];
+  inputElementArray.forEach(function (input) {
+    input.addEventListener("input", updateColorOnDom);
   });
 
-  // Reuseable function for handdle user color input
-  function syncColorInput(inputType, value) {
-    if (inputType === "hex" && value.length === 6 && isValid(`#${value}`)) {
-      const rgbFromHex = hexToRgb(value);
-      rgbUserInput.value = `rgb(${rgbFromHex})`;
-      displayColor.style.backgroundColor = `#${value}`;
-    } else if (inputType === "rgb" && value.length >= 5) {
-      const hexFromRgb = rgbToHex(value);
-      hexUserInput.value = hexFromRgb;
-      displayColor.style.backgroundColor = `#${hexFromRgb}`;
-    }
+  const copyHandler = handleCopy(
+    userHexInput,
+    userRgbInput,
+    copyModeHex,
+    copyModeRgb,
+    copiedText
+  );
+  copyBtn.addEventListener("click", copyHandler);
+}
+
+// Handdle DOM Operation
+
+function updateColors() {
+  const colors = randomDecimalNumber();
+  updateColorsToDom(colors);
+}
+
+function syncColorInput() {
+  const hexValue = this.value;
+  if (isValid(`#${hexValue}`)) {
+    const userInputValue = hexToRgb(hexValue);
+    updateColorsToDom(userInputValue);
+    this.value = hexValue.toUpperCase();
   }
-  // Handdle the hexUserInput user input
-  hexUserInput.addEventListener("keyup", function (e) {
-    syncColorInput("hex", e.target.value);
-  });
+}
 
-  const sliderRGB = {
-    r: rgbRedRange.textContent,
-    g: rgbGreenRange.textContent,
-    b: rgbBlueRange.textContent
+function updateColorOnSliderChange(
+  redRangeValue,
+  greenRangeValue,
+  blueRangeValue
+) {
+  return function () {
+    const color = {
+      red: parseInt(redRangeValue.value),
+      green: parseInt(greenRangeValue.value),
+      blue: parseInt(blueRangeValue.value),
+    };
+    updateColorsToDom(color);
   };
+}
 
-  // Handdle the rgb user input
-  rgbRedRange.addEventListener("input", function (e) {
-    sliderRGB.r = e.target.value;
-  });
-  rgbGreenRange.addEventListener("input", function (e) {
-    sliderRGB.g = e.target.value;
-  });
-  rgbBlueRange.addEventListener("input", function (e) {
-    sliderRGB.b = e.target.value;
-    console.log(sliderRGB);
-  });
-  rgbUserInput.addEventListener("keyup", function (e) {
-    syncColorInput("rgb", e.target.value);
-  });
-  
-  
+function handleCopy(
+  userHexInput,
+  rgbUserInput,
+  copyModeHex,
+  copyModeRgb,
+  copiedText
+) {
+  return function () {
+    let copiedValue = "";
 
-  // Reuseable function for handdle copy to clipboard
-  function copyToClipboard(value, format) {
-    if (!value) return alert("Invalid color code!");
+    if (copyModeHex.checked) {
+      if (!userHexInput.value) return alert("Invalid input!");
+      copiedValue = `#${userHexInput.value}`;
+    } else if (copyModeRgb.checked) {
+      if (!rgbUserInput.value) return alert("Invalid input!");
+      copiedValue = rgbUserInput.value;
+    } else {
+      return alert("Please Select Color Mode First!");
+    }
 
-    window.navigator.clipboard.writeText(
-      format === "hex" ? `#${value}` : `rgb(${value})`
-    );
-    copiedText.textContent = format === "hex" ? `#${value}` : `${value}`;
+    // Copy to clipboard
+    navigator.clipboard.writeText(copiedValue);
+    copiedText.textContent = copiedValue;
 
     // Show toast notification
     toast.classList.add("active");
+    setTimeout(() => toast.classList.remove("active"), 3000);
 
-    setTimeout(() => {
-      toast.classList.remove("active");
-    }, 3000);
-  }
-
-  hexCopy.addEventListener("click", () =>
-    copyToClipboard(hexUserInput.value, "hex")
-  );
-  // rgbCopy.addEventListener("click", () =>
-  //   copyToClipboard(rgbUserInput.value, "rgb")
-  // );
-
-  // Close the toast close icon click
-  toast.addEventListener("click", function () {
-    console.log(this);
-    
-    toast.classList.remove("active");
-  });
+    // Close toast on click
+    toast.addEventListener("click", () => toast.classList.remove("active"));
+  };
 }
 
-// Create a getElementById function to handdle the dom error
+// Utils Functions
+
+/**
+ * Get the Elemenet by ID With Handdle Error
+ * @param {string} HTML Element
+ * @returns {Boolean}
+ */
+
 function getElementByIdError(id) {
   const element = document.getElementById(id);
   if (!element) {
@@ -113,48 +130,92 @@ function getElementByIdError(id) {
   return element;
 }
 
-// Generate the colors
+/**
+ * Generate Radmon Decimal Values
+ * Return as Object with two value[Hex][RGB]
+ * @returns {object}
+ */
+
 function randomDecimalNumber() {
   const red = Math.floor(Math.random() * 256);
   const green = Math.floor(Math.random() * 256);
   const blue = Math.floor(Math.random() * 256);
 
   return {
-    hex: `#${red.toString(16).padStart(2, "0")}${green
-      .toString(16)
-      .padStart(2, "0")}${blue.toString(16).padStart(2, "0")}`,
-    rgb: `${red}, ${green}, ${blue}`,
+    red,
+    green,
+    blue,
   };
 }
 
-// Step 7 - HEX to Rgb function
-function hexToRgb(colorCode) {
-  const twoRedCode = colorCode.slice(0, 2);
-  const twoGreenCode = colorCode.slice(2, 4);
-  const twoBlueCode = colorCode.slice(4);
+/**
+ * Convert HEX to RGB
+ * @param {string} colorCode
+ * @returns {object}
+ */
 
-  return `${parseInt(twoRedCode, 16)} , ${parseInt(
-    twoGreenCode,
-    16
-  )}, ${parseInt(twoBlueCode, 16)}`;
+function hexToRgb(hexCode) {
+  const twoRedCode = hexCode.slice(0, 2);
+  const twoGreenCode = hexCode.slice(2, 4);
+  const twoBlueCode = hexCode.slice(4);
+
+  return {
+    red: `${parseInt(twoRedCode, 16)}`,
+    green: `${parseInt(twoGreenCode, 16)}`,
+    blue: `${parseInt(twoBlueCode, 16)}`,
+  };
 }
 
-// Step 8 - RGB to Hex function
-function rgbToHex(colorCode) {
-  const codeArr = colorCode.split(",").map((num) => parseInt(num.trim(), 10));
+/**
+ * Convert RGB to HEX
+ * @param {string} colorCode
+ * @returns {string}
+ */
 
-  const redCode = codeArr[0].toString(16).padStart(2, "0");
-  const greenCode = codeArr[1].toString(16).padStart(2, "0");
-  const blueCode = codeArr[2].toString(16).padStart(2, "0");
+function rgbToHex(rgbCode) {
+  const rgb = rgbCode;
+
+  const redCode = rgb.red.toString(16).padStart(2, "0");
+  const greenCode = rgb.green.toString(16).padStart(2, "0");
+  const blueCode = rgb.blue.toString(16).padStart(2, "0");
 
   return `${redCode}${greenCode}${blueCode}`;
 }
 
-// Create a validate function to validate the user color code
+/**
+ * Validate The User Hex Input
+ * @param {string} color
+ * @returns {Boolean}
+ */
+
 function isValid(color) {
   if (color.length !== 7) return false;
   if (color[0] !== "#") return false;
 
   color = color.substring(1);
   return /^[0-9A-Fa-f]{6}$/i.test(color);
+}
+
+/**
+ * Update The Colors To The DOM
+ * @param {object} colors
+ */
+
+function updateColorsToDom(rgbColor) {
+  const hex = rgbToHex(rgbColor);
+  const rgbObj = rgbColor;
+
+  getElementByIdError(
+    "display-color"
+  ).style.backgroundColor = `rgb(${rgbObj.red}, ${rgbObj.green}, ${rgbObj.blue})`;
+  getElementByIdError("hex-user-input").value = hex.toUpperCase();
+  getElementByIdError(
+    "rgb-user-input"
+  ).value = `rgb(${rgbObj.red}, ${rgbObj.green}, ${rgbObj.blue})`;
+  getElementByIdError("rgb-red-value").textContent = rgbObj.red;
+  getElementByIdError("rgb-green-value").textContent = rgbObj.green;
+  getElementByIdError("rgb-blue-value").textContent = rgbObj.blue;
+  getElementByIdError("rgb-red-range").value = rgbObj.red;
+  getElementByIdError("rgb-green-range").value = rgbObj.green;
+  getElementByIdError("rgb-blue-range").value = rgbObj.blue;
 }

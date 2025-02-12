@@ -122,6 +122,7 @@ body {
     font-size: 14px;
     margin: 0 5px;
     cursor: pointer;
+    user-select: none;
 }
 
 .copy-mode-group input[type="radio"] {
@@ -176,6 +177,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
 }
 
 .hex-input-box input,
@@ -186,6 +188,7 @@ body {
     background: none;
     text-align: left;
     padding: 6px 0;
+    user-select: none;
 }
 
 /* RGB Color Adjustments */

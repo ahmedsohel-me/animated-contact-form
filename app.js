@@ -6,12 +6,17 @@
 
 // Globals
 window.addEventListener("load", main);
+let toastTimeout;
 
 /**
  * Main Function will Handdle DOM Events
  */
 
 function main() {
+  // Defalut Color
+  const defaultColor = randomDecimalNumber();
+  updateColorsToDom(defaultColor);
+
   // DOM References
   const generateColorBtn = getElementByIdError("generate-color-btn");
   const userHexInput = getElementByIdError("hex-user-input");
@@ -19,13 +24,9 @@ function main() {
   const redRangeValue = getElementByIdError("rgb-red-range");
   const greenRangeValue = getElementByIdError("rgb-green-range");
   const blueRangeValue = getElementByIdError("rgb-blue-range");
-  const copyModeHex = getElementByIdError("hex-mode");
-  const copyModeRgb = getElementByIdError("rgb-mode");
   const copyBtn = getElementByIdError("copy-btn");
-  const toast = getElementByIdError("toast");
-  const copiedText = getElementByIdError("copied-text");
 
-  // Handdle DOM Events
+  // DOM Events Operation
   generateColorBtn.addEventListener("click", updateColors);
   userHexInput.addEventListener("keyup", syncColorInput);
 
@@ -38,18 +39,10 @@ function main() {
   inputElementArray.forEach(function (input) {
     input.addEventListener("input", updateColorOnDom);
   });
-
-  const copyHandler = handleCopy(
-    userHexInput,
-    userRgbInput,
-    copyModeHex,
-    copyModeRgb,
-    copiedText
-  );
-  copyBtn.addEventListener("click", copyHandler);
+  copyBtn.addEventListener("click", handdleCopy);
 }
 
-// Handdle DOM Operation
+// Event Handdler
 
 function updateColors() {
   const colors = randomDecimalNumber();
@@ -80,40 +73,72 @@ function updateColorOnSliderChange(
   };
 }
 
-function handleCopy(
-  userHexInput,
-  rgbUserInput,
-  copyModeHex,
-  copyModeRgb,
-  copiedText
-) {
-  return function () {
-    let copiedValue = "";
+function handdleCopy() {
+  const getAllRadioInput = document.getElementsByName("color-mode");
+  const copyMode = getCheckedRadioValue(getAllRadioInput);
+  const toast = getElementByIdError("toast");
+  const copiedText = getElementByIdError("copied-text");
 
-    if (copyModeHex.checked) {
-      if (!userHexInput.value) return alert("Invalid input!");
-      copiedValue = `#${userHexInput.value}`;
-    } else if (copyModeRgb.checked) {
-      if (!rgbUserInput.value) return alert("Invalid input!");
-      copiedValue = rgbUserInput.value;
+  if (copyMode === "hex-mode") {
+    const hexValue = getElementByIdError("hex-user-input").value;
+    if (hexValue && isValid(`#${hexValue}`)) {
+      window.navigator.clipboard.writeText(`#${hexValue}`);
+      copiedText.textContent = `#${hexValue}`;
+      toast.classList.add("active");
     } else {
-      return alert("Please Select Color Mode First!");
+      alert("Invalid Hex Color!");
+      return;
     }
+  } else if (copyMode === "rgb-mode") {
+    const rgbValue = getElementByIdError("rgb-user-input").value;
 
-    // Copy to clipboard
-    navigator.clipboard.writeText(copiedValue);
-    copiedText.textContent = copiedValue;
+    if (rgbValue) {
+      window.navigator.clipboard.writeText(rgbValue);
+      copiedText.textContent = rgbValue;
+      toast.classList.add("active");
+    } else {
+      alert("Invalid RGB Color!");
+      return;
+    }
+  } else {
+    alert("Invalid Mode!");
+    return;
+  }
 
-    // Show toast notification
-    toast.classList.add("active");
-    setTimeout(() => toast.classList.remove("active"), 3000);
+  // Clear previous timeout before setting a new one
+  clearTimeout(toastTimeout);
 
-    // Close toast on click
-    toast.addEventListener("click", () => toast.classList.remove("active"));
-  };
+  // Remove active class after 3 seconds
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove("active");
+  }, 3000);
 }
 
-// Utils Functions
+// DOM Operations
+
+/**
+ * Update The Colors To The DOM
+ * @param {object} colors
+ */
+
+function updateColorsToDom(rgbColor) {
+  const hex = rgbToHex(rgbColor);
+  const rgbObj = rgbColor;
+
+  getElementByIdError(
+    "display-color"
+  ).style.backgroundColor = `rgb(${rgbObj.red}, ${rgbObj.green}, ${rgbObj.blue})`;
+  getElementByIdError("hex-user-input").value = hex.toUpperCase();
+  getElementByIdError(
+    "rgb-user-input"
+  ).value = `rgb(${rgbObj.red}, ${rgbObj.green}, ${rgbObj.blue})`;
+  getElementByIdError("rgb-red-value").textContent = rgbObj.red;
+  getElementByIdError("rgb-green-value").textContent = rgbObj.green;
+  getElementByIdError("rgb-blue-value").textContent = rgbObj.blue;
+  getElementByIdError("rgb-red-range").value = rgbObj.red;
+  getElementByIdError("rgb-green-range").value = rgbObj.green;
+  getElementByIdError("rgb-blue-range").value = rgbObj.blue;
+}
 
 /**
  * Get the Elemenet by ID With Handdle Error
@@ -129,6 +154,8 @@ function getElementByIdError(id) {
   }
   return element;
 }
+
+// Utils Functions
 
 /**
  * Generate Radmon Decimal Values
@@ -197,25 +224,18 @@ function isValid(color) {
 }
 
 /**
- * Update The Colors To The DOM
- * @param {object} colors
+ * Get The Current Checked Value From The Radios
+ * @param {Array} nodes
+ * @returns {string}
  */
 
-function updateColorsToDom(rgbColor) {
-  const hex = rgbToHex(rgbColor);
-  const rgbObj = rgbColor;
-
-  getElementByIdError(
-    "display-color"
-  ).style.backgroundColor = `rgb(${rgbObj.red}, ${rgbObj.green}, ${rgbObj.blue})`;
-  getElementByIdError("hex-user-input").value = hex.toUpperCase();
-  getElementByIdError(
-    "rgb-user-input"
-  ).value = `rgb(${rgbObj.red}, ${rgbObj.green}, ${rgbObj.blue})`;
-  getElementByIdError("rgb-red-value").textContent = rgbObj.red;
-  getElementByIdError("rgb-green-value").textContent = rgbObj.green;
-  getElementByIdError("rgb-blue-value").textContent = rgbObj.blue;
-  getElementByIdError("rgb-red-range").value = rgbObj.red;
-  getElementByIdError("rgb-green-range").value = rgbObj.green;
-  getElementByIdError("rgb-blue-range").value = rgbObj.blue;
+function getCheckedRadioValue(nodes) {
+  let checked = null;
+  for (let i = 0; i < nodes.length; i++) {
+    if (nodes[i].checked) {
+      checked = nodes[i].value;
+      break;
+    }
+  }
+  return checked;
 }

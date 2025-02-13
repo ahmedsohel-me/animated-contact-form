@@ -8,8 +8,8 @@
     <title>Generate Random Colors</title>
 </head>
 <body>
-    <section>
-        <div class="container">
+    <div class="container">
+        <section>
             <div class="header">
                 <div class="header-info">
                     <h3>Display Color</h3>
@@ -19,15 +19,18 @@
             </div>
             <div class="copy-color-section">
                 <div class="copy-color-header">
-                    <h3>Change & Copy Color</h3>
-                    <button id="copy-btn">Copy To Clipboard</button>
+                    <h3>Save & Copy Color</h3>
+                    <div class="copy-btn-group">                    
+                        <button id="save-btn">Save</button>
+                        <button id="copy-btn">Copy</button>
+                    </div>
                 </div>
                 <div class="copy-color-footer">
                     <h5>Select Copy Mode</h5>
                     <div class="copy-mode-group">
                         <input type="radio" id="hex-mode" name="color-mode" value="hex-mode" checked>
                         <label for="hex-mode">Hex</label>
-    
+
                         <input type="radio" id="rgb-mode" name="color-mode" value="rgb-mode">
                         <label for="rgb-mode">RGB</label>
                     </div>
@@ -39,7 +42,7 @@
                     <div class="input-hex">
                         <h5>Hex</h5>
                         <div class="hex-input-box">
-                            <span class="hash">#</span> 
+                            <span class="hash">#</span>
                             <input type="text" id="hex-user-input" placeholder="a03f3f">
                         </div>
                     </div>
@@ -84,14 +87,33 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Toast modal  -->
-        <div class="toast success" id="toast">
-            <span class="toast-icon">&#10004;</span>
-            <span class="toast-message">Color <span id="copied-text">#494746</span> has been copied to clipboard</span>
-        </div>
-    </section>
+            <!-- Toast modal  -->
+            <div class="toast success" id="toast">
+                <span class="toast-icon">&#10004;</span>
+                <span class="toast-message">Color <span id="copied-text">#494746</span> has been copied to
+                    clipboard</span>
+            </div>
+        </section>
 
+        <!-- Presets Colors Section  -->
+        <section>
+            <div class="preset-header">
+                <h3>Preset Colors</h3>
+            </div>
+            <div class="preset-container" id="preset-container">
+                <!-- Data will come dynamically from js  -->
+            </div>
+        </section>
+
+        <!-- Custom Colors Section  -->
+        <section>
+            <div class="custom-header">
+                <h3>Custom Colors</h3>
+            </div>
+            <div class="custom-container" id="custom-container">
+                <!-- Data will come dynamically from js  -->
+            </div>
+        </section>
+    </div>
 </body>
-
 </html>

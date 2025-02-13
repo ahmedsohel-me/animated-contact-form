@@ -121,15 +121,13 @@ function updateColorOnSliderChange(
 function handdleInputCopy() {
   const getAllRadioInput = document.getElementsByName("color-mode");
   const copyMode = getCheckedRadioValue(getAllRadioInput);
-  const toast = getElementByIdError("toast");
-  const copiedText = getElementByIdError("copied-text");
 
   if (copyMode === "hex-mode") {
     const hexValue = getElementByIdError("hex-user-input").value;
     if (hexValue && isValid(`#${hexValue}`)) {
       copyToClipboard(`#${hexValue}`);
     } else {
-      alert("Invalid Hex Color!");
+      showToast("error", `#${hexValue}`, "Invalid Hex Code!")
       return;
     }
   } else if (copyMode === "rgb-mode") {
@@ -137,7 +135,7 @@ function handdleInputCopy() {
     if (rgbValue) {
       copyToClipboard(rgbValue);
     } else {
-      alert("Invalid RGB Color!");
+      showToast("error", `#${hexValue}`, "Invalid RGB Color!");
       return;
     }
   } else {
@@ -173,7 +171,10 @@ function saveColorsToLocalStorage() {
     `#${getElementByIdError("hex-user-input").value}`
   );
   const colorFromLocalStorage = getCustomColorFromLocalStorage();
-  renderColorPresets(colorFromLocalStorage, getElementByIdError("custom-container"));
+  renderColorPresets(
+    colorFromLocalStorage,
+    getElementByIdError("custom-container")
+  );
 }
 
 //-------------------------        -       -------------------------------------------------
@@ -216,7 +217,6 @@ function getElementByIdError(id) {
   return element;
 }
 
-
 /**
  * Generate dynamic HTML for Preset
  * @param {string}
@@ -252,13 +252,35 @@ function renderColorPresets(colors, parentNode) {
  * @param {string}
  */
 
-function copyToClipboard(colorValue) {
-  const toast = getElementByIdError("toast");
-  const copiedText = getElementByIdError("copied-text");
-
+async function copyToClipboard(colorValue) {
+  try {
+    await window.navigator.clipboard.writeText(colorValue);
+    showToast("success", colorValue);
+  } catch (error) {
+    showToast("error", colorValue);
+  }
   window.navigator.clipboard.writeText(colorValue);
-  copiedText.textContent = colorValue;
-  toast.classList.add("active");
+}
+
+/**
+ * Toast Modal For Diffrent Purpose
+ * @param {string} type
+ * @param {string} message
+ */
+
+function showToast(type = "success", copiedColor, msg = "Failed to copy to clipboard!") {
+  const toast = getElementByIdError("toast");
+  const toastMessage = getElementByIdError("toast-message");
+  const toastIcon = getElementByIdError("toast-icon");
+
+  if (type === "error") {
+    toastMessage.innerHTML = msg;
+    toastIcon.innerHTML = "&#10006;";
+    toast.classList.add("active", "error");
+  } else {
+    toastMessage.innerHTML = `Color <span class="copied-text">${copiedColor}</span> has been copied to clipboard`;
+    toast.classList.add("active", "success");
+  }
 
   // Clear previous timeout before setting a new one
   clearTimeout(toastTimeout);
@@ -377,7 +399,7 @@ function addCustomColorToLocalStorage(color) {
   if (colors.length > 23) {
     colors.shift();
   }
-  colors.push(color);
+  colors.unshift(color);
   localStorage.setItem("savedCustomColors", JSON.stringify(colors));
 }
 

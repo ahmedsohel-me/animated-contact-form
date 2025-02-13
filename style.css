@@ -321,7 +321,25 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-#copied-text {
+.toast.error {
+    background: rgba(239, 68, 68, 0.95);
+    color: white;
+}
+
+.toast.error .toast-icon {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.toast.info {
+    background: rgba(59, 130, 246, 0.95);
+    color: white;
+}
+
+.toast.info .toast-icon {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.copied-text {
     font-size: 15px;
     font-weight: bolder;
     margin: 0 0.2rem;

@@ -96,10 +96,12 @@ function updateColors() {
 
 function syncColorInput() {
   const hexValue = this.value;
+  if(hexValue.length !== 6) return showToast("error", null);
   if (isValid(`#${hexValue}`)) {
     const userInputValue = hexToRgb(hexValue);
     updateColorsToDom(userInputValue);
     this.value = hexValue.toUpperCase();
+    getElementByIdError("toast").classList.remove("active", "success", "error");
   }
 }
 
@@ -120,22 +122,22 @@ function updateColorOnSliderChange(
 
 function handdleInputCopy() {
   const getAllRadioInput = document.getElementsByName("color-mode");
+  const hexValue = getElementByIdError("hex-user-input").value;
   const copyMode = getCheckedRadioValue(getAllRadioInput);
 
   if (copyMode === "hex-mode") {
-    const hexValue = getElementByIdError("hex-user-input").value;
     if (hexValue && isValid(`#${hexValue}`)) {
       copyToClipboard(`#${hexValue}`);
     } else {
-      showToast("error", `#${hexValue}`, "Invalid Hex Code!")
+      showToast("error", null)
       return;
     }
   } else if (copyMode === "rgb-mode") {
     const rgbValue = getElementByIdError("rgb-user-input").value;
-    if (rgbValue) {
+    if (rgbValue && isValid(`#${hexValue}`)) {
       copyToClipboard(rgbValue);
     } else {
-      showToast("error", `#${hexValue}`, "Invalid RGB Color!");
+      showToast("error", null);
       return;
     }
   } else {
@@ -268,16 +270,19 @@ async function copyToClipboard(colorValue) {
  * @param {string} message
  */
 
-function showToast(type = "success", copiedColor, msg = "Failed to copy to clipboard!") {
+function showToast(type = "success", copiedColor) {
   const toast = getElementByIdError("toast");
   const toastMessage = getElementByIdError("toast-message");
   const toastIcon = getElementByIdError("toast-icon");
 
+  toast.classList.remove("error", "success")
+
   if (type === "error") {
-    toastMessage.innerHTML = msg;
+    toastMessage.innerHTML = "Invalid color!";
     toastIcon.innerHTML = "&#10006;";
     toast.classList.add("active", "error");
-  } else {
+  }
+  else {
     toastMessage.innerHTML = `Color <span class="copied-text">${copiedColor}</span> has been copied to clipboard`;
     toast.classList.add("active", "success");
   }
@@ -287,7 +292,7 @@ function showToast(type = "success", copiedColor, msg = "Failed to copy to clipb
 
   // Remove active class after 3 seconds
   toastTimeout = setTimeout(() => {
-    toast.classList.remove("active");
+    toast.classList.remove("active", "error", "success");
   }, 3000);
 }
 
@@ -394,6 +399,8 @@ function getCheckedRadioValue(nodes) {
  */
 
 function addCustomColorToLocalStorage(color) {
+  if(!isValid(color)) return;
+
   let colors = JSON.parse(localStorage.getItem("savedCustomColors")) || [];
   if (colors.includes(color)) return alert("Color Already Added");
   if (colors.length > 23) {

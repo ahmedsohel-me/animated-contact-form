@@ -92,9 +92,7 @@ function main() {
 function updateColors() {
   const colors = randomDecimalNumber();
   updateColorsToDom(colors);
-  const disableSaveBtn = getElementByIdError("save-btn");
-  disableSaveBtn.disabled = false;
-  disableSaveBtn.classList.remove("disabled");
+  disableSaving(false);
 }
 
 function syncColorInput() {
@@ -120,6 +118,7 @@ function updateColorOnSliderChange(
       blue: parseInt(blueRangeValue.value),
     };
     updateColorsToDom(color);
+    disableSaving(false)
   };
 }
 
@@ -154,7 +153,6 @@ function handdlePresetsCopy(event) {
   
   // const getAllRadioInput = document.getElementsByName("color-mode");
   // const checkedMode = getCheckedRadioValue(getAllRadioInput);
-  const disableSaveBtn = getElementByIdError("save-btn");
 
   if (colorBox.classList.contains("color-box")) {
     const colorValue = colorBox.getAttribute("data-color");
@@ -162,8 +160,8 @@ function handdlePresetsCopy(event) {
     // const rgbValue = `rgb(${getRgbObj.red},${getRgbObj.green},${getRgbObj.blue})`;    
 
     updateColorsToDom(getRgbObj)
-    disableSaveBtn.disabled = true;
-    disableSaveBtn.classList.add("disabled")
+    disableSaving(true);
+    notificationSound()
 
     // Copy functionlity for the presetColors 
     
@@ -306,6 +304,22 @@ function showToast(type = "success", copiedColor) {
   toastTimeout = setTimeout(() => {
     toast.classList.remove("active", "error", "success");
   }, 3000);
+}
+
+/**
+ * Disbaled & Enabled SAVE functionality 
+ * @param {Boolean} isDisabled
+ */
+
+function disableSaving(isDisabled) {
+  const disableSaveBtn = getElementByIdError("save-btn");
+  if(isDisabled) {
+    disableSaveBtn.disabled = true;
+    disableSaveBtn.classList.add("disabled");    
+  } else {
+    disableSaveBtn.disabled = false;
+    disableSaveBtn.classList.remove("disabled");    
+  }
 }
 
 //-------------------------        -       -------------------------------------------------

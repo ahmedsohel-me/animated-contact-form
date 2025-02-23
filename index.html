@@ -107,12 +107,45 @@
         <!-- Custom Colors Section  -->
         <section>
             <div class="custom-header">
-                <h3>Custom Colors</h3>
+                <h3>Saved Colors</h3>
             </div>
             <div class="custom-container" id="custom-container">
                 <!-- Data will come dynamically from js  -->
             </div>
         </section>
+
+        <!-- Image Editing Section  -->
+         <section>
+            <div class="image-edting-container">
+                <div class="left-section">
+                    <div class="preview-image-container">
+                        <div id="image-preview">
+                            <img src="https://images.pexels.com/photos/30682275/pexels-photo-30682275/free-photo-of-serene-beach-landscape-in-taiwan-s-scenic-coastline.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                        </div>
+                        <div class="image-input">
+                            <input type="file" name="uploaded-img" id="uploaded-img">
+                            <button type="button">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-section">
+                    <div class="editing-controllars">
+                        <div class="background-position">
+                            <span>Background Position</span>
+                            <select id="">
+                                <option value="left">left</option>
+                                <option value="right">right</option>
+                                <option value="top">top</option>
+                                <option value="bottom">bottom</option>
+                                <option value="center">center</option>
+                                <option value="inherit">inherit</option>
+                                <option value="initial">initial</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </section>
     </div>
 </body>
 </html>

@@ -113,6 +113,7 @@ body {
     color: #6e6e6e;
     text-decoration: line-through;
     cursor: not-allowed;
+    background-position: initial;
 }
 
 .copy-color-footer {

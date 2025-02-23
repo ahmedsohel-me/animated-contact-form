@@ -92,6 +92,9 @@ function main() {
 function updateColors() {
   const colors = randomDecimalNumber();
   updateColorsToDom(colors);
+  const disableSaveBtn = getElementByIdError("save-btn");
+  disableSaveBtn.disabled = false;
+  disableSaveBtn.classList.remove("disabled");
 }
 
 function syncColorInput() {
@@ -148,23 +151,31 @@ function handdleInputCopy() {
 
 function handdlePresetsCopy(event) {
   const colorBox = event.target;
-  const getAllRadioInput = document.getElementsByName("color-mode");
-  const checkedMode = getCheckedRadioValue(getAllRadioInput);
+  
+  // const getAllRadioInput = document.getElementsByName("color-mode");
+  // const checkedMode = getCheckedRadioValue(getAllRadioInput);
+  const disableSaveBtn = getElementByIdError("save-btn");
 
   if (colorBox.classList.contains("color-box")) {
     const colorValue = colorBox.getAttribute("data-color");
     const getRgbObj = hexToRgb(colorValue.substring(1));
-    const rgbValue = `rgb(${getRgbObj.red},${getRgbObj.green},${getRgbObj.blue})`;
+    // const rgbValue = `rgb(${getRgbObj.red},${getRgbObj.green},${getRgbObj.blue})`;    
 
-    if (checkedMode === "hex-mode") {
-      copyToClipboard(colorValue);
-      notificationSound();
-    } else if (checkedMode === "rgb-mode" && rgbValue) {
-      copyToClipboard(rgbValue);
-      notificationSound();
-    } else {
-      alert("Invalid Mode!");
-    }
+    updateColorsToDom(getRgbObj)
+    disableSaveBtn.disabled = true;
+    disableSaveBtn.classList.add("disabled")
+
+    // Copy functionlity for the presetColors 
+    
+    // if (checkedMode === "hex-mode") {
+    //   copyToClipboard(colorValue);
+    //   notificationSound();
+    // } else if (checkedMode === "rgb-mode" && rgbValue) {
+    //   copyToClipboard(rgbValue);
+    //   notificationSound();
+    // } else {
+    //   alert("Invalid Mode!");
+    // }
   }
 }
 
@@ -190,7 +201,8 @@ function saveColorsToLocalStorage() {
 
 function updateColorsToDom(rgbColor) {
   const hex = rgbToHex(rgbColor);
-  const rgbObj = rgbColor;
+  
+  const rgbObj = rgbColor;  
 
   getElementByIdError(
     "display-color"
@@ -354,9 +366,9 @@ function hexToRgb(hexCode) {
 function rgbToHex(rgbCode) {
   const rgb = rgbCode;
 
-  const redCode = rgb.red.toString(16).padStart(2, "0");
-  const greenCode = rgb.green.toString(16).padStart(2, "0");
-  const blueCode = rgb.blue.toString(16).padStart(2, "0");
+  const redCode = parseInt(rgb.red).toString(16).padStart(2, "0");
+  const greenCode = parseInt(rgb.green).toString(16).padStart(2, "0");
+  const blueCode = parseInt(rgb.blue).toString(16).padStart(2, "0");
 
   return `${redCode}${greenCode}${blueCode}`;
 }

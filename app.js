@@ -97,7 +97,7 @@ function updateColors() {
 
 function syncColorInput() {
   const hexValue = this.value;
-  if(hexValue.length !== 6) return showToast("error", null);
+  if (hexValue.length !== 6) return showToast("error", null);
   if (isValid(`#${hexValue}`)) {
     const userInputValue = hexToRgb(hexValue);
     updateColorsToDom(userInputValue);
@@ -118,7 +118,7 @@ function updateColorOnSliderChange(
       blue: parseInt(blueRangeValue.value),
     };
     updateColorsToDom(color);
-    disableSaving(false)
+    disableSaving(false);
   };
 }
 
@@ -131,7 +131,7 @@ function handdleInputCopy() {
     if (hexValue && isValid(`#${hexValue}`)) {
       copyToClipboard(`#${hexValue}`);
     } else {
-      showToast("error", null)
+      showToast("error", null);
       return;
     }
   } else if (copyMode === "rgb-mode") {
@@ -150,21 +150,21 @@ function handdleInputCopy() {
 
 function handdlePresetsCopy(event) {
   const colorBox = event.target;
-  
+
   // const getAllRadioInput = document.getElementsByName("color-mode");
   // const checkedMode = getCheckedRadioValue(getAllRadioInput);
 
   if (colorBox.classList.contains("color-box")) {
     const colorValue = colorBox.getAttribute("data-color");
     const getRgbObj = hexToRgb(colorValue.substring(1));
-    // const rgbValue = `rgb(${getRgbObj.red},${getRgbObj.green},${getRgbObj.blue})`;    
+    // const rgbValue = `rgb(${getRgbObj.red},${getRgbObj.green},${getRgbObj.blue})`;
 
-    updateColorsToDom(getRgbObj)
+    updateColorsToDom(getRgbObj);
     disableSaving(true);
-    notificationSound()
+    notificationSound();
 
-    // Copy functionlity for the presetColors 
-    
+    // Copy functionlity for the presetColors
+
     // if (checkedMode === "hex-mode") {
     //   copyToClipboard(colorValue);
     //   notificationSound();
@@ -199,8 +199,8 @@ function saveColorsToLocalStorage() {
 
 function updateColorsToDom(rgbColor) {
   const hex = rgbToHex(rgbColor);
-  
-  const rgbObj = rgbColor;  
+
+  const rgbObj = rgbColor;
 
   getElementByIdError(
     "display-color"
@@ -285,14 +285,13 @@ function showToast(type = "success", copiedColor) {
   const toastMessage = getElementByIdError("toast-message");
   const toastIcon = getElementByIdError("toast-icon");
 
-  toast.classList.remove("error", "success")
+  toast.classList.remove("error", "success");
 
   if (type === "error") {
     toastMessage.innerHTML = "Invalid color!";
     toastIcon.innerHTML = "&#10006;";
     toast.classList.add("active", "error");
-  }
-  else {
+  } else {
     toastMessage.innerHTML = `Color <span class="copied-text">${copiedColor}</span> has been copied to clipboard`;
     toast.classList.add("active", "success");
   }
@@ -307,18 +306,18 @@ function showToast(type = "success", copiedColor) {
 }
 
 /**
- * Disbaled & Enabled SAVE functionality 
+ * Disbaled & Enabled SAVE functionality
  * @param {Boolean} isDisabled
  */
 
 function disableSaving(isDisabled) {
   const disableSaveBtn = getElementByIdError("save-btn");
-  if(isDisabled) {
+  if (isDisabled) {
     disableSaveBtn.disabled = true;
-    disableSaveBtn.classList.add("disabled");    
+    disableSaveBtn.classList.add("disabled");
   } else {
     disableSaveBtn.disabled = false;
-    disableSaveBtn.classList.remove("disabled");    
+    disableSaveBtn.classList.remove("disabled");
   }
 }
 
@@ -425,7 +424,7 @@ function getCheckedRadioValue(nodes) {
  */
 
 function addCustomColorToLocalStorage(color) {
-  if(!isValid(color)) return;
+  if (!isValid(color)) return;
 
   let colors = JSON.parse(localStorage.getItem("savedCustomColors")) || [];
   if (colors.includes(color)) return alert("Color Already Added");
@@ -444,3 +443,56 @@ function addCustomColorToLocalStorage(color) {
 function getCustomColorFromLocalStorage() {
   return JSON.parse(localStorage.getItem("savedCustomColors")) || [];
 }
+
+const fileInput = getElementByIdError("file-input");
+const uploadBtn = getElementByIdError("upload-btn");
+const remveBtn = getElementByIdError("remove-btn");
+const rightSection = getElementByIdError("right-section");
+const imagePreview = getElementByIdError("image-preview");
+
+uploadBtn.addEventListener("click", function () {
+  fileInput.click();
+});
+fileInput.addEventListener("change", function () {
+  const file = this.files[0];
+  if (file) {
+    const imageUrl = URL.createObjectURL(file);
+    console.log(imageUrl);
+    imagePreview.style.backgroundImage = `url("${imageUrl}")`;
+    document.body.style.backgroundImage = `url("${imageUrl}")`;
+    rightSection.classList.add("active");
+  }
+});
+remveBtn.addEventListener("click", function () {
+  console.log(fileInput.value);
+  fileInput.value = "";
+  imagePreview.style.backgroundImage = "";
+  document.body.style.backgroundImage = "";
+  rightSection.classList.remove("active");
+});
+
+document.getElementById("bg-size").addEventListener("change", function () {
+  imagePreview.style.backgroundSize = this.value.toLowerCase();
+  document.body.style.backgroundSize = this.value.toLowerCase();
+});
+
+document.getElementById("bg-position").addEventListener("change", function () {
+  imagePreview.style.backgroundPosition = this.value.toLowerCase();
+});
+
+document.getElementById("bg-repeat").addEventListener("change", function () {
+  imagePreview.style.backgroundRepeat = this.value.toLowerCase();
+  document.body.style.backgroundRepeat = this.value.toLowerCase();
+});
+
+document
+  .getElementById("bg-attachment")
+  .addEventListener("change", function () {
+    imagePreview.style.backgroundAttachment = this.value.toLowerCase();
+    document.body.style.backgroundAttachment = this.value.toLowerCase();
+  });
+
+document.getElementById("bg-blend").addEventListener("change", function () {
+  imagePreview.style.backgroundBlendMode = this.value.toLowerCase();
+  document.body.style.backgroundBlendMode = this.value.toLowerCase();
+});

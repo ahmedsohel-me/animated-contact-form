@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="app.js" defer></script>
     <title>Generate Random Colors</title>
 </head>
+
 <body>
     <div class="container">
         <section>
@@ -20,7 +22,7 @@
             <div class="copy-color-section">
                 <div class="copy-color-header">
                     <h3>Save & Copy Color</h3>
-                    <div class="copy-btn-group">                    
+                    <div class="copy-btn-group">
                         <button id="save-btn">Save</button>
                         <button id="copy-btn">Copy</button>
                     </div>
@@ -115,37 +117,91 @@
         </section>
 
         <!-- Image Editing Section  -->
-         <section>
+        <section>
+            <div class="background-header">
+                <h3>Background Preferences</h3>
+            </div>
             <div class="image-edting-container">
                 <div class="left-section">
+                    <h5>Background Preview</h5>
                     <div class="preview-image-container">
-                        <div id="image-preview">
-                            <img src="https://images.pexels.com/photos/30682275/pexels-photo-30682275/free-photo-of-serene-beach-landscape-in-taiwan-s-scenic-coastline.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-                        </div>
+                        <div id="image-preview"></div>
                         <div class="image-input">
-                            <input type="file" name="uploaded-img" id="uploaded-img">
-                            <button type="button">Remove</button>
+                            <input type="file" name="uploaded-img" id="file-input">
+                            <button type="button" id="upload-btn">Upload</button>
+                            <button type="button" id="remove-btn">Remove</button>
                         </div>
                     </div>
                 </div>
-                <div class="right-section">
-                    <div class="editing-controllars">
+                <div class="right-section" id="right-section">
+                    <div class="controls">
+                        <div class="background-size">
+                            <h5>Background Size:</h5>
+                            <select id="bg-size">
+                                <option value="auto">Auto</option>
+                                <option value="cover">Cover</option>
+                                <option value="contain">Contain</option>
+                                <option value="50% 50%">50% 50%</option>
+                                <option value="100% 100%">100% 100%</option>
+                            </select>
+                        </div>
+
                         <div class="background-position">
-                            <span>Background Position</span>
-                            <select id="">
-                                <option value="left">left</option>
-                                <option value="right">right</option>
-                                <option value="top">top</option>
-                                <option value="bottom">bottom</option>
-                                <option value="center">center</option>
-                                <option value="inherit">inherit</option>
-                                <option value="initial">initial</option>
+                            <h5>Background Position:</h5>
+                            <select id="bg-position">
+                                <option value="center">Center</option>
+                                <option value="top">Top</option>
+                                <option value="bottom">Bottom</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                                <option value="top left">Top Left</option>
+                                <option value="top right">Top Right</option>
+                                <option value="bottom left">Bottom Left</option>
+                                <option value="bottom right">Bottom Right</option>
+                            </select>
+                        </div>
+
+                        <div class="background-repeat">
+                            <h5>Background Repeat:</h5>
+                            <select id="bg-repeat">
+                                <option value="no-repeat">No Repeat</option>
+                                <option value="repeat">Repeat</option>
+                                <option value="repeat-x">Repeat-X</option>
+                                <option value="repeat-y">Repeat-Y</option>
+                                <option value="space">Space</option>
+                                <option value="round">Round</option>
+                            </select>
+                        </div>
+
+                        <div class="background-attactment">
+                            <h5>Background Attachment:</h5>
+                            <select id="bg-attachment">
+                                <option value="scroll">Scroll</option>
+                                <option value="fixed">Fixed</option>
+                                <option value="local">Local</option>
+                            </select>
+                        </div>
+
+                        <div class="background-blend-mode">
+                            <h5>Background Blend Mode:</h5>
+                            <select id="bg-blend">
+                                <option value="normal">Normal</option>
+                                <option value="multiply">Multiply</option>
+                                <option value="screen">Screen</option>
+                                <option value="overlay">Overlay</option>
+                                <option value="darken">Darken</option>
+                                <option value="lighten">Lighten</option>
+                                <option value="color-dodge">Color Dodge</option>
+                                <option value="color-burn">Color Burn</option>
+                                <option value="difference">Difference</option>
+                                <option value="exclusion">Exclusion</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
-         </section>
+        </section>
     </div>
 </body>
+
 </html>

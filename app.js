@@ -472,7 +472,7 @@ remveBtn.addEventListener("click", function () {
 });
 
 document.getElementById("bg-size").addEventListener("change", function () {
-  imagePreview.style.backgroundSize = this.value.toLowerCase();
+  // imagePreview.style.backgroundSize = this.value.toLowerCase();
   document.body.style.backgroundSize = this.value.toLowerCase();
 });
 
@@ -481,18 +481,18 @@ document.getElementById("bg-position").addEventListener("change", function () {
 });
 
 document.getElementById("bg-repeat").addEventListener("change", function () {
-  imagePreview.style.backgroundRepeat = this.value.toLowerCase();
+  // imagePreview.style.backgroundRepeat = this.value.toLowerCase();
   document.body.style.backgroundRepeat = this.value.toLowerCase();
 });
 
 document
   .getElementById("bg-attachment")
   .addEventListener("change", function () {
-    imagePreview.style.backgroundAttachment = this.value.toLowerCase();
+    // imagePreview.style.backgroundAttachment = this.value.toLowerCase();
     document.body.style.backgroundAttachment = this.value.toLowerCase();
   });
 
 document.getElementById("bg-blend").addEventListener("change", function () {
-  imagePreview.style.backgroundBlendMode = this.value.toLowerCase();
+  // imagePreview.style.backgroundBlendMode = this.value.toLowerCase();
   document.body.style.backgroundBlendMode = this.value.toLowerCase();
 });

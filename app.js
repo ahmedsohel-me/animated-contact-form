@@ -461,6 +461,7 @@ fileInput.addEventListener("change", function () {
     imagePreview.style.backgroundImage = `url("${imageUrl}")`;
     document.body.style.backgroundImage = `url("${imageUrl}")`;
     rightSection.classList.add("active");
+    remveBtn.style.display = "block";
   }
 });
 remveBtn.addEventListener("click", function () {
@@ -469,7 +470,9 @@ remveBtn.addEventListener("click", function () {
   imagePreview.style.backgroundImage = "";
   document.body.style.backgroundImage = "";
   rightSection.classList.remove("active");
+  this.style.display = 'none'
 });
+
 
 document.getElementById("bg-size").addEventListener("change", function () {
   // imagePreview.style.backgroundSize = this.value.toLowerCase();

@@ -470,7 +470,7 @@ remveBtn.addEventListener("click", function () {
   imagePreview.style.backgroundImage = "";
   document.body.style.backgroundImage = "";
   rightSection.classList.remove("active");
-  this.style.display = 'none'
+  
 });
 
 

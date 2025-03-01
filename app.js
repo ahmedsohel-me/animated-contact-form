@@ -499,3 +499,7 @@ document.getElementById("bg-blend").addEventListener("change", function () {
   // imagePreview.style.backgroundBlendMode = this.value.toLowerCase();
   document.body.style.backgroundBlendMode = this.value.toLowerCase();
 });
+
+function updateBgPreferences() {
+  
+}
